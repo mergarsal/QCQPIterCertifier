@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # We require C++ 14
 
 
 # build the examples
-set(BUILD_${LIBRARY_TARGET_NAME}_EXAMPLE ON)
+set(BUILD_${LIBRARY_TARGET_NAME}_EXAMPLE OFF)
 
 
 

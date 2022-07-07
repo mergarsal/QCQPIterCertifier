@@ -142,7 +142,7 @@ namespace SymmCert{
                   }
                    
                
-                  G.H = 2 * H * xm_*xm_.transpose() + 2 * problem_matrices.Al; /
+                  G.H = 2 * H * xm_*xm_.transpose() + 2 * problem_matrices.Al; 
                 return G;
                 
                 
