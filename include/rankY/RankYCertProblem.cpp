@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "RankYCertProblem.h"
 
@@ -100,46 +100,7 @@ namespace RankYCert{
                 {                                   
                         vec_const.col(i) = svec(constMatrices_[i]);                              
                 }
-                // std::cout << "Matrix constraint:\n" << vec_const << std::endl; 
-                // std::cout << "Singular values of the constraints:\n"; 
-                /*
-                const Eigen::JacobiSVD<Eigen::MatrixXd> svd(vec_const.transpose()*vec_const);
-                std::cout << svd.singularValues() << std::endl;
-                // std::cout << "Singular values size: " << svd.singularValues().rows() << std::endl;
-                int n_dep_const = 0; 
-                for (int i=n_const-1;i>=0;i--)
-                {                                   
-                        if (svd.singularValues()[i] < 1e-10)  n_dep_const++; 
-                        else break;                          
-                }
-                */
-                // std::cout << "We found " << n_dep_const << " DEPENDENT constraints\n"; 
-                // std::cout << "Matrix V:\n" << svd.matrixV() << std::endl;
-                
-                // Eigen::LDLT<Eigen::MatrixXd> lltOfA(vec_const.transpose()*vec_const); // compute the Cholesky decomposition of A
-                // Eigen::MatrixXd L_m = lltOfA.matrixL();
-                // Eigen::VectorXd d_m = lltOfA.vectorD();
-                // Eigen::Transpositions Pp = lltOfA.transpositionsP(); 
-                 
-                 
-                 
-                // std::cout << "diff:\n" << vec_const.transpose()*vec_const - Pp.transpose() * L_m.transpose() * d_m * L_m * Pp<< std::endl;
-             
-                // std::cout << "Above should be zero\n"; 
-                
-                // std::cout << "L form LDL:\n"; //  << L_m << std::endl; 
-                
-                // Eigen::VectorXd dd_m = (Pp.transpose() * L_m * d_m).diagonal(); 
-                /*
-                int n_dep_const_chol = 0; 
-                for (int i=0;i<n_const;i++)
-                {                                   
-                        if (d_m(i) < 1e-10)  n_dep_const_chol++; 
-                        std::cout << "i = " << i << " : " << d_m(i) << std::endl;
-                        // else break;                          
-                }
-                */
-                // std::cout << "[CHOL] We found " << n_dep_const_chol << " DEPENDENT constraints\n"; 
+                       
                 
                 
                 // QR
@@ -216,8 +177,7 @@ namespace RankYCert{
              
                    MatrixY YY = Y.Y; 
                    VectorM mult = Y.mult;
-                   VarCert G(YY, mult); 
-                   // std::cout << "Y in gradient:\n" << YY << std::endl;     
+                   VarCert G(YY, mult);     
                    
                    Matrix Hj; 
                    for (int i=0;i < mult.rows(); i++)
@@ -230,7 +190,7 @@ namespace RankYCert{
                    
         
                   G.Y = 2 * problem_matrices.H * xm_*xm_.transpose() * YY + 4 * problem_matrices.Al * YY + 2 * xm_*xm_.transpose()*problem_matrices.H*YY;
-                  // std::cout << "gradient Y:\n" << G.Y << std::endl; 
+                
                   
                 return G;
                 
@@ -276,39 +236,32 @@ namespace RankYCert{
                                             
                                                    int m = xm_.rows();
                                                   
-                                                   // std::cout << "\nHessH:\n" << HessEuc.Y << std::endl;
-                                                   // std::cout << "VYY:\n" << VYY << std::endl;
                                                     
                                                     for (int i=0;i < n; i++)
                                                     {
                                                             
                                                               HessEuc.mult(i) = 2 * trace_constr_.row(i)*Vmult + 4 * (constMatrices_[i] * YY * VYY.transpose()).trace();
                                                        
-                                                              // std::cout << "2 * trace_constr_.row(i)*Vmult: " << 2 * trace_constr_.row(i)*Vmult << std::endl; 
-                                                              // std::cout << "4 * (constMatrices_[i] * YY * VYY.transpose()).trace(): " << 4 * (constMatrices_[i] * YY * VYY.transpose()).trace() << std::endl; 
+                                                              
                                                               HessEuc.Y += 4 * Vmult(i) * constMatrices_[i] * YY;
-                                                              // std::cout << "HessH SUM:\n" << 4 * Vmult(i) * constMatrices_[i] * YY << std::endl;
+                                                             
                                                     }
                                                    
                                                
                                                     HessEuc.Y += 4 * (YY * VYY.transpose() * YY + VYY*YY.transpose() * YY + problem_matrices.H * VYY);
-                                                    // std::cout << "t1: " << 4 * (YY * VYY.transpose() * YY + VYY*YY.transpose() * YY + problem_matrices.H * VYY) << std::endl;
+                                                    
                                                
                                                     HessEuc.Y += 4 * Cl.transpose() * VYY;
-                                                    // std::cout << "t2: " << 4 * Cl.transpose() * VYY << std::endl;
+                                                    
                                                     
                                                     HessEuc.Y += 2 * (VYY * YY.transpose() * xm_*xm_.transpose() * YY + YY * VYY.transpose() * xm_*xm_.transpose() * YY + problem_matrices.H * xm_ * xm_.transpose() * VYY); 
                                                   
-                                                    // std::cout << "t3: " << 2 * (VYY * YY.transpose() * xm_*xm_.transpose() * YY + YY * VYY.transpose() * xm_*xm_.transpose() * YY + problem_matrices.H * xm_ * xm_.transpose() * VYY) << std::endl; 
+                                                   
                                                     
                                                     HessEuc.Y += 2 * xm_ * xm_.transpose() * (VYY * YY.transpose() * YY + YY * VYY.transpose() * YY + problem_matrices.H * VYY);
-                                                    // std::cout << "t4: " << 2 * xm_ * xm_.transpose() * (VYY * YY.transpose() * YY + YY * VYY.transpose() * YY + problem_matrices.H * VYY) << std::endl; 
+                                                   
                                                    
                                                     // Riemannain Hessian for H
-                                                    // std::cout << "Y in Hessian:\n" << Y.Y << std::endl; 
-                                                    // std::cout << "Mult in Hessian:\n" << Y.mult << std::endl;
-                                                    // std::cout << "\nHessian Y:\n" << HessEuc.Y << std::endl;
-                                                    // std::cout << "Hessian mult:\n" << HessEuc.mult << std::endl; 
                                                     HessRiemannian.Y = domain_.ProjYYt(YY, HessEuc.Y); 
                                                     HessRiemannian.mult = HessEuc.mult;
                                                    
@@ -353,8 +306,6 @@ namespace RankYCert{
                               l_min = eig_ss.eigenvalues()(0);
                               v_min = eig_ss.eigenvectors().col(0);
                                  
-                              // std::cout << "Hessian:\n" << blockHessian << std::endl;       
-                              // std::cout << "Eigenvalues block Hessian:\n" << eig_ss.eigenvalues() << std::endl;
                                                             
                               return l_min;                      
                                                  
@@ -400,11 +351,9 @@ namespace RankYCert{
             template <typename Matrix, typename MatrixY, typename VectorX, typename VectorM>
             bool RankYCertProblem<Matrix, MatrixY, VectorX, VectorM>::stopFcnCost(unsigned long i, double f, double df, double tol_f, double tol_fnorm, double tol_df) const
                              {                                
-                                // std::cout << "[STOP-FCN] Cost f: " << f << std::endl; 
-                                // std::cout << "[STOP-FCN] Normalized cost f: " << f / (init_Hessian_.rows() * init_Hessian_.rows()) << std::endl;
+                                
                                 double f_norm = f / (init_Hessian_.rows() * init_Hessian_.rows());
-                                // std::cout << "[STOP-FCN] Tol cost: " << tol_f << std::endl; 
-                                // std::cout << "[STOP-FCN] Iteration number :" << i << std::endl;
+                                
                                 if ((i > 1) && ((f < tol_f) || (f_norm < tol_fnorm) ) && (df < tol_df))  return true;
                                 // else 
                                 return false;                             

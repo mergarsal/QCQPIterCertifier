@@ -1,4 +1,3 @@
-#pragma once
 
 
 #include "StaircaseCert.h"
@@ -231,23 +230,10 @@ namespace StaircaseCert{
                             Eigen::MatrixXd Ured = svd.matrixU().leftCols(rank_i);  
                             Eigen::MatrixXd Vred = svd.matrixV().topRightCorner(rank_i, rank_i);                     
                             Eigen::MatrixXd D = (svd.singularValues().topRows(rank_i)).asDiagonal();
-                            Y_i = Eigen::MatrixXd(n_vars, rank_i);
-                            // std::cout << "[IN DECRE] Size Y: (" << Y_i.rows() << "," << Y_i.cols() << ")\n";                           
+                            Y_i = Eigen::MatrixXd(n_vars, rank_i);                         
                             Y_i = Ured * D * Vred.transpose();
                             
-                            /*
-                            std::cout << "Singular values:\n" << svd.singularValues() << std::endl;
-                            std::cout << "matrix D:\n" << D << std::endl; 
-                            std::cout << "Matrix Vred:\n" << Vred << std::endl;
-                            std::cout << "Vred:\n" << svd.matrixV() << std::endl; 
-                            */
-                            /*
-                            std::cout << "[IN DECRE] After Size Vred: (" << svd.matrixV().rows() << "," << svd.matrixV().cols() << ")\n";
-                            std::cout << "[IN DECRE] After Size U: (" << Ured.rows() << "," << Ured.cols() << ")\n";
-                            std::cout << "[IN DECRE] After Size Vred: (" << Vred.rows() << "," << Vred.cols() << ")\n";
-                            std::cout << "[IN DECRE] After Size D: (" << D.rows() << "," << D.cols() << ")\n";
-                            std::cout << "[IN DECRE] After Size Y: (" << Y_i.rows() << "," << Y_i.cols() << ")\n";
-                            */
+                            
                         }                            
                     }
                     
@@ -296,7 +282,6 @@ namespace StaircaseCert{
                         
                         rank_i++;
                         mult_i = my_result.opt_mult;    
-                        // std::cout << "Matrix Y:\n" << my_result.opt_Y << std::endl;
                         // Increase number iterations
                         iter++;
                         
@@ -333,8 +318,7 @@ namespace StaircaseCert{
                             Eigen::MatrixXd Ured = options_.matrixU.rightCols(rank_i);                     
                             Eigen::MatrixXd D = (options_.singularValues.bottomRows(rank_i)).asDiagonal();
                             Y_i = Eigen::MatrixXd(n_vars, rank_i);
-                            Y_i.setZero();
-                            // std::cout << "[IN DECRE] Size Y: (" << Y_i.rows() << "," << Y_i.cols() << ")\n";                           
+                            Y_i.setZero();                          
                             Y_i = Ured * D;
                         
                         }

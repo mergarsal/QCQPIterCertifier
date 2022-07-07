@@ -1,5 +1,3 @@
-#pragma once
-
 
 #include "RankYCert.h"
 #include "RankYCertProblem.h"

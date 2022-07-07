@@ -49,11 +49,9 @@ namespace RankYCert{
                  
                  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> W(t.cols(), t.cols()); 
                  Eigen::VectorXd lambdas(t.cols());
-                 // std::cout << "---  INIT ---\n";
-                 // std::cout << "Y:\n" << t << std::endl;
-                 // std::cout << "Matrix YtY:\n" << SS << std::endl;
+             
                  lambdas = eig_ss.eigenvalues();
-                 // std::cout << "EIgenvalues SS:\n" << lambdas << std::endl; 
+
                  for (int i=0;i<t.cols();i++)
                  {
                     for (int j=i;j<t.cols();j++)
@@ -63,8 +61,6 @@ namespace RankYCert{
                     }
                  } 
                  
-                 // std::cout << "Matrix W:\n" << W << std::endl;
-                 // std::cout << "Matrix M:\n" << M << std::endl;
                  double tol_y = 1e-10;
                  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> solY = M; 
                  for (int i=0;i<M.rows();i++)
@@ -83,13 +79,7 @@ namespace RankYCert{
                  } 
                  
                  
-                 // std::cout << "Eigenvectors:\n" << eig_ss.eigenvectors() << std::endl; 
-                 
-                 // std::cout << "Omega:\n" << eig_ss.eigenvectors() * solY * eig_ss.eigenvectors().transpose() << std::endl;
-                 // std::cout << "Eta:\n" << Vt << std::endl; 
-                 // std::cout << "t:\n" << t << std::endl;
-                 // std::cout << "--- END ---\n";
-                 
+                             
                  
                  
                  return (Vt - t * eig_ss.eigenvectors() * solY * eig_ss.eigenvectors().transpose());  

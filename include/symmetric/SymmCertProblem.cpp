@@ -1,4 +1,3 @@
-#pragma once
 
 
 #include "SymmCertProblem.h"
@@ -20,7 +19,7 @@ namespace SymmCert{
                                                                       const Matrix & init_Hessian) 
         {
 
-               // std::cout << "Inside constructor problem\n"; 
+              
                xm_ = xm; 
                costMatrix_ = costMatrix; 
                constMatrices_ = constMatrices;
@@ -30,28 +29,24 @@ namespace SymmCert{
                precon_mult_ = 1.0; 
                precon_H_ = 1.0;
                
-               // std::cout << "Number constraints: " << n << std::endl;  
+
                // create trace_constr_
                trace_constr_.setZero(n, n);   
-               // std::cout << "Running constraints matrices\n";   
-               // std::cout << "Size constraints: " << constMatrices.size() << std::endl;        
+              
                for (int i=0;i<n;i++)
                {
-               // std::cout << "Going for row: " << i << std::endl;
+
                 for(int j=i;j<n;j++)
                 {
-                    // std::cout << "Entering column: " << j << std::endl; 
-                    // std::cout << "Matrix i:\n" << constMatrices[i] << std::endl; 
-                    // std::cout << "Matrix j:\n" << constMatrices[j] << std::endl; 
-                    // std::cout << "Value (i,j) = " << (constMatrices[i] * constMatrices[j]).trace() << std::endl;
+                    
                      trace_constr_(i,j) = (constMatrices[i] * constMatrices[j]).trace();  
-                     // std::cout << "value assigned!\n";
+                   
                      trace_constr_(j,i) = (constMatrices[j] * constMatrices[i]).trace();  
-                     // std::cout << "End of loop\n"; 
+                     
                 } 
                }
              
-// std::cout << "End of constructor\n"; 
+
         }; //end of constructor
 
         template <typename Matrix, typename VectorX, typename VectorM>
@@ -92,10 +87,8 @@ namespace SymmCert{
             }
             f2 = (Al*Al.transpose()).trace(); 
             
-            // TODO regul
-            // double f3 = xm_.transpose() * H * xm_;
-            
-            return (f1 + f2); // + 0.00001 * f3);
+                  
+            return (f1 + f2); 
 
         }
         
@@ -126,10 +119,8 @@ namespace SymmCert{
             problem_matrices.Al = Al;
             f2 = (Al*Al).trace();
             
-            // TODO regul
-            // double f3 = xm_.transpose() * H * xm_;
              
-            return (f1 + f2); // + 0.00001 * f3);
+            return (f1 + f2); 
         }
 
 
@@ -150,10 +141,8 @@ namespace SymmCert{
                     
                   }
                    
-                  // TODO last term from f3
-                  // std::cout << "Grad mult:\n" << G.mult << std::endl;
-                  G.H = 2 * H * xm_*xm_.transpose() + 2 * problem_matrices.Al; // + 0.00001 * 2 * (xm_*xm_.transpose());
-                  // std::cout << "Grad H:\n" << G.H << std::endl;
+               
+                  G.H = 2 * H * xm_*xm_.transpose() + 2 * problem_matrices.Al; /
                 return G;
                 
                 
@@ -193,7 +182,7 @@ namespace SymmCert{
              
                                      
                                                    HessEuc.H = 2 * Eigen::MatrixXd::Identity(n,n) * VH + 2*xm_*xm_.transpose() * VH;
-                                           //  std::cout << "HessH:\n" << HessEuc.H << std::endl;
+
                                                   
                                                     for (int i=0;i < mult.rows(); i++)
                                                     {
@@ -201,7 +190,7 @@ namespace SymmCert{
                                                               HessEuc.mult(i) = 2 * trace_constr_.row(i)*Vmult + 2 * (constMatrices_[i] * VH).trace();
                                                        
                                                               HessEuc.H += 2 * Vmult(i) * constMatrices_[i];
-                                                              // std::cout << "HessH SUM:\n" << 2 * Vmult(i) * constMatrices_[i] << std::endl;
+
                                                     }
                                                     
                                                    

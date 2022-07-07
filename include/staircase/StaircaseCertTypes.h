@@ -120,9 +120,6 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 VarCert sum(const VarCert& X, const VarCert& Y);
 
-// VarCert operator*(double b, const VarCert & a);  
-       
-// VarCert operator*(const VarCert & a, double b) ;
        
 }  // end of namespace
 
