@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # We require C++ 14
 
 
 # build the examples
-set(BUILD_${LIBRARY_TARGET_NAME}_EXAMPLE OFF)
+set(BUILD_${LIBRARY_TARGET_NAME}_EXAMPLE ON)
 
 
 
@@ -57,8 +57,6 @@ install(  DIRECTORY ${PROJECT_SOURCE_DIR}/dependences/Rosen_optimization/include
 )
 
 
-# IMPORT OpenGV library
-add_definitions(-march=native)
 
 
 set(${LIBRARY_TARGET_NAME}_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -149,7 +147,7 @@ target_include_directories(${LIBRARY_TARGET_NAME} PUBLIC
 
 target_link_libraries(${LIBRARY_TARGET_NAME}
         PUBLIC 
-                Optimization 
+                
                 ${BLAS_LIBRARIES} 
                 ${M} 
                 ${LAPACK}
