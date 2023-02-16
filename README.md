@@ -3,7 +3,7 @@
 iterative certifier for QCQP based 
 on Lagrangian duality 
 through on-manifold optimization. 
-Refer to our paper [HERE](https://mapir.isa.uma.es/mapirwebsite/?p=1718) 
+Refer to our paper [HERE](https://www.sciencedirect.com/science/article/pii/S0004370223000085?via%3Dihub) 
 for more information.
 
 
@@ -19,7 +19,14 @@ for more information.
 If you use this code for your research, please cite:
 
 ```
-:S
+@ARTICLE{,
+    author = {Garcia-Salguero, Mercedes and Gonzalez-Jimenez, Javier},
+     title = {Fast certifiable relative pose estimation with gravity prior},
+   journal = {Artificial Intelligence},
+      year = {2023},
+       url = {http://mapir.isa.uma.es/papersrepo/2023/2023_mercedes_AI_priorRPp_doc.pdf},
+       doi = {https://doi.org/10.1016/j.artint.2023.103862}
+}
 ```
 
 
